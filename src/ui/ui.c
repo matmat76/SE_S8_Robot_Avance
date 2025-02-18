@@ -374,34 +374,34 @@ extern int ui_start() {
     choice = handle_user_prompt_int(UI_ASK_CHOICE, 0, (NB_COMMAND - 1));
     printf("Value of the user's choice : %d\n",choice);
     switch (choice) {
-    case CMD_CREATE_PATH:
-      handle_create_path();
-      break;
-    case CMD_ADD_STEP:
-      handle_add_step();
-      break;
-    case CMD_DESTROY_PATH:
-      handle_destroy_path();
-      break;
-    case CMD_SHOW_PATH:
-      printf("I go into the ui_start for handle_show_path");
-      handle_show_path();
-      break;
-    case CMD_START_PATH:
-      if (handle_start_path() == EXIT_SUCCESS)
-        return EXIT_SUCCESS;
-      break;
-    case CMD_SAVE_PATH:
-      handle_save_path();
-      break;
-    case CMD_LOAD_PATH:
-      handle_load_path();
-      break;
-    case CMD_QUIT:
-      print_success_message(CMD_QUIT);
-      return EXIT_FAILURE;
-    default:
-      break;
+      case CMD_CREATE_PATH:
+        handle_create_path();
+        break;
+      case CMD_ADD_STEP:
+        handle_add_step();
+        break;
+      case CMD_DESTROY_PATH:
+        handle_destroy_path();
+        break;
+      case CMD_SHOW_PATH:
+        printf("I go into the ui_start for handle_show_path");
+        handle_show_path();
+        break;
+      case CMD_START_PATH:
+        if (handle_start_path() == EXIT_SUCCESS)
+          return EXIT_SUCCESS;
+        break;
+      case CMD_SAVE_PATH:
+        handle_save_path();
+        break;
+      case CMD_LOAD_PATH:
+        handle_load_path();
+        break;
+      case CMD_QUIT:
+        print_success_message(CMD_QUIT);
+        return EXIT_FAILURE;
+      default:
+        break;
     }
   }
   return EXIT_SUCCESS; // never used

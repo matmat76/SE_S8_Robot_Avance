@@ -1,6 +1,8 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
+#include "../common/data-type.h"
+
 /**
  * @file robot.h
  * @brief Declaration of the Robot class.
@@ -9,7 +11,6 @@
 // @todo : Define the different types needed
 
 //Définitions des variables 
-typedef int speed_pct_t;
 typedef enum{
     LEFT_WHEEL, 
     RIGHT_WHEEL, 
