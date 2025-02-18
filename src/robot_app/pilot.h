@@ -43,11 +43,6 @@ typedef struct{
     speed_pct_t speed; 
 }move_t;
 
-typedef struct{
-    clock_t start_time; 
-    int duration;
-}move_timing_t;
-
 
 move_status_t pilot_get_status();
 move_type_t pilot_get_move_type();
