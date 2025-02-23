@@ -2,17 +2,21 @@
  * main program with pilot and robot modules
  */
 
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <unistd.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <unistd.h>
+ #include <errno.h>
+ #include <string.h>
+ #include <netdb.h>
+ #include <sys/types.h>
+ #include <netinet/in.h>
+ #include <sys/socket.h>
+ #include "common/data-type.h"
+ #include <signal.h>
+
+
 #include "robot_app/robot.h"
 #include "robot_app/copilot.h"
-#include "ui/ui.h"
-#include "utils.h"
-
 /**
  * @mainpage Robot application mission 2.
  * This projects aims to move a robot along a predefined trajectory.
@@ -39,10 +43,13 @@ typedef enum {
 
 #define STEPS_NUMBER 6 /**< number of steps (or moves) in the path */
 
+#define PORT_NUM 3490
+#define BACKLOG 10
 
 // declaration of private functions
 static void app_loop(void);
-
+static void handle_client_data(int client_socket); 
+static void setup_serveur(void);
 /**
  * @brief Global variable used for program clean exit
  */
@@ -82,17 +89,85 @@ int main(void)
 
 static void app_loop()
 {
-  
-  /*Start running the IHM*/
-  ui_start();
-  /*Have to define the random path from copilot*/
-  while (running){
+}
 
-    /* Encoders polling */
-    for (int i = 0; i < ENCODERS_SCAN_NB; i++){
-      usleep(DELAY);
+
+static void handle_client_data(int client_socket){
+  sock_data_t receive_data;
+  ssize_t bytes_received; 
+
+  bytes_received = recv(client_socket, &receive_data.num_moves, sizeof(int), 0);
+  if(bytes_received == -1){
+    perror("error lors de la récupération du nombre de mouvements\n");
+    return;
+  }
+
+  receive_data.moves = malloc(sizeof(move_t)*receive_data.num_moves);
+
+  if(receive_data.moves == NULL){
+    perror("error lors de l'allocation de la mémoire pour les mouvements\n");
+    return;
+  }
+
+
+  bytes_received = recv(client_socket, receive_data.moves, sizeof(move_t)*receive_data.num_moves, 0);
+  if(bytes_received == -1){
+    perror("error lors de la récupération des mouvements\n");
+    return;
+  }
+
+  if(bytes_received <=0){
+    free(receive_data.moves);
+    perror("Error de la récupération des mouvements\n");
+    return;
+  }
+
+  copilot_set_Path(receive_data.moves, receive_data.num_moves);
+  copilot_start_path();
+  free(receive_data.moves);
+
+}
+
+static void setup_serveur(void){
+  int sockfd, new_fd;
+  struct sockaddr_in my_addr;
+  struct sockaddr_in their_addr;
+  socklen_t sin_size;
+  int yes = 1;
+
+  if((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1){
+    perror("socket");
+    exit(1);
+  }
+
+  if(setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1){
+    perror("setsockopt");
+    exit(1);
+  }
+
+  my_addr.sin_family = AF_INET;
+  my_addr.sin_port = htons(PORT_NUM);
+  my_addr.sin_addr.s_addr = INADDR_ANY;
+  memset(&(my_addr.sin_zero), '\0', 8);
+
+  if(bind(sockfd,(struct sockaddr*)&my_addr, sizeof(struct sockaddr)) == -1){
+    perror("bind");
+    exit(1);
+  }
+
+  if(listen(sockfd,BACKLOG)==-1){
+    perror("listen");
+    exit(1);
+  }
+
+  while(running){
+    sin_size = sizeof(struct sockaddr_in);
+    if((new_fd = accept(sockfd, (struct sockaddr*)&their_addr, &sin_size)) == -1){
+      perror("accept");
+      continue;
     }
-    fprintf(stdout,"Actual position x = %d, y = %d\n",getX(),getY());
-  
+    printf("server: got connection from %s\n", inet_ntoa(their_addr.sin_addr));
+    handle_client_data(new_fd);
+    close(new_fd);
   }
 }

@@ -1,3 +1,5 @@
+#include "../robot_app/pilot.h"
+#include "../robot_app/copilot.h"
 #ifndef DATA_TYPE_H
 #define DATA_TYPE_H
 
@@ -44,6 +46,8 @@ typedef struct{
 }move_t;
 
 typedef struct{
+    move_t* moves; 
+    int num_moves;
     
 }sock_data_t;
 

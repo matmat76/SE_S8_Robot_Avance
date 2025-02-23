@@ -1,5 +1,7 @@
 {
   "files.associations": {
-    "pilot.h": "c"
+    "pilot.h": "c",
+    "stdlib.h": "c",
+    "robot.h": "c"
   }
 }
