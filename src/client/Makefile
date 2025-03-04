@@ -1,5 +1,5 @@
 # Executable name
-EXEC_NAME = ui.elf
+EXEC_NAME = go
 
 # Folder structure
 SRC_DIR = ./src
