@@ -94,6 +94,7 @@ DEP = $(SRC:.c=.d)
 all: $(EXE)
 
 $(EXE): $(OBJ)
+	@ mkdir -p $(dir $(EXE))
 	$(CC) $(CCFLAGS) $(OBJ) $(LDFLAGS) -o $(EXE)
 
 .c.o:
