@@ -13,7 +13,7 @@
  #include <sys/socket.h>
  #include "../common/data-type.h"
  #include <signal.h>
-
+ #include <arpa/inet.h>  // Ajoutez cette ligne pour inet_ntoa
 
 #include "robot_app/robot.h"
 #include "robot_app/copilot.h"

@@ -15,7 +15,7 @@ void pilot_start_move(move_t a_move){
     static int compteur = 0;
 
     if(robot_moving == MOVE_DONE){
-        fprintf(stdout,"Starting move %d\n",compteur++);
+        fprintf(stdout,"Pilot.c : Starting move %d\n",compteur++ +1);
 
         /*Starting timer*/
         switch(a_move.move_type){
@@ -26,7 +26,7 @@ void pilot_start_move(move_t a_move){
                 robot_set_speed(a_move.speed,a_move.speed);
                 robot_moving = MOVE_FORWARD;
                 compteur ++;
-                fprintf(stdout,"Forward %d \n",compteur);
+                fprintf(stdout,"Pilot.c : Forward %d \n",compteur);
                 break;
             case ROTATION:
             /*We define the target for the rotation in advance*/      

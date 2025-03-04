@@ -9,10 +9,10 @@ int robot_start(void) {
   fprintf(stdout,"Initializing robot ...\n"); 
 
   /*Initialization of robot*/
-  if (mrpiz_init()!=0){
-    fprintf(stderr,"Failed to initialize robot\n");
-    return -1; 
-  }
+  if (mrpiz_init() != 0) {
+    fprintf(stderr, "Failed to initialize robot. Errno: %d, Message: %s\n", errno, strerror(errno));
+    return -1;
+}
   fprintf(stdout,"Robot initialized successfully\n");
 
   /*Reset and check the encoders*/
@@ -31,14 +31,14 @@ int robot_start(void) {
 void robot_set_speed(speed_pct_t left, speed_pct_t right) {
   // @todo
   /*On vérifie que la valeur de speed est comprise entre -100 et 100*/
-  fprintf(stdout,"Setting speed - Left : %d, Right : %d\n",left,right);
+  fprintf(stdout,"Robot.c : Setting speed - Left : %d, Right : %d\n",left,right);
   if(left<-100 || left>100 || right<-100 || right>100){
-    printf("Invalid speed values \n");
+    printf("Robot.c : Invalid speed values \n");
     return;
   }
   mrpiz_motor_set(MRPIZ_MOTOR_LEFT,left);
   mrpiz_motor_set(MRPIZ_MOTOR_RIGHT,right);
-  fprintf(stdout,"Speed set successfully\n");
+  fprintf(stdout,"Robot.c : Speed set successfully\n");
 }
 
 //We give the wheel's value depending on the encoder of left or right motor
@@ -49,14 +49,14 @@ int robot_get_wheel_position(wheel_t wheel_id) {
   switch(wheel_id){
     case LEFT_WHEEL: 
       position = mrpiz_motor_encoder_get(MRPIZ_MOTOR_LEFT);
-      fprintf(stdout,"Left encoder position : %d\n", mrpiz_motor_encoder_get(MRPIZ_MOTOR_LEFT));
+      fprintf(stdout,"Robot.c : Left encoder position : %d\n", mrpiz_motor_encoder_get(MRPIZ_MOTOR_LEFT));
       break; 
     case RIGHT_WHEEL:
       position = mrpiz_motor_encoder_get(MRPIZ_MOTOR_RIGHT);
-      fprintf(stdout,"Right encoder position : %d\n", mrpiz_motor_encoder_get(MRPIZ_MOTOR_RIGHT));
+      fprintf(stdout,"Robot.c : Right encoder position : %d\n", mrpiz_motor_encoder_get(MRPIZ_MOTOR_RIGHT));
       break;
     default : 
-      fprintf(stdout,"Invalid wheel ID\n");
+      fprintf(stdout,"Robot.c : Invalid wheel ID\n");
       position = -1; 
       break; 
   }
