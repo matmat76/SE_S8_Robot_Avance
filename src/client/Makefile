@@ -50,11 +50,14 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 
 # Clean the project
 clean:
-	@ $(RM) -r $(BUILD_DIR) $(BIN_DIR)
-	@ echo ">>> Build files cleaned"
+	@ echo "\n==== Clean build files $< ========="
+	$(RM) -r $(BUILD_DIR)
+	@ echo "==== Clean done $< ========="	
 
-hello: 
-	@ echo "Hello World"
+remove:
+	@ echo "\n==== Removing generated files $< ========="
+	$(RM) -r $(BUILD_DIR) $(BIN_DIR)
+	@ echo "==== Files removed $< ========="	
 
 # Phony targets
-.PHONY: all clean
+.PHONY: all clean remove

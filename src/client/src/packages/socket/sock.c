@@ -10,8 +10,7 @@
 
 #include "./sock.h"
 
-#define SERVER_ADDRESS "127.0.0.1"
-#define SERVER_PORT 3490
+#include "../../../utils.h"
 
 static int sockfd;
 
