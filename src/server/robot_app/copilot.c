@@ -177,16 +177,18 @@ void copilot_start_path(){
     distance_covered = 0; 
     x = 0; 
     y = 0; 
+    for(int i =0; i<copilot_get_number_step(); i++){
+        path_status = PATH_MOVING; 
+        fprintf(stdout,"Entering pilot start move\n");
+        fprintf(stdout,"Step %d, type = %d, speed = %d\n",
+                current_step,
+                path[current_step].move_type,
+                path[current_step].speed);
+        pilot_start_move(path[current_step]);
+        fprintf(stdout,"%d move started\n",i);
 
-    path_status = PATH_MOVING; 
+    }
      
-    fprintf(stdout,"Entering pilot start move\n");
-    fprintf(stdout,"Step %d, type = %d, speed = %d\n",
-            current_step,
-            path[current_step].move_type,
-            path[current_step].speed);
-    pilot_start_move(path[current_step]);
-    fprintf(stdout,"First move started\n");
 
 }
 
