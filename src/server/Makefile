@@ -8,11 +8,7 @@
 
 # la librairie MRPiZ permettant de discuter avec le simulateur Intox du robot MrPizz (programme java)
 #LIB_MRPIZ = /absolute/path/to/lib_mrpiz/
-ifeq ($(shell uname -m), x86_64)
-LIB_MRPIZ = $(realpath ../../lib_mrpiz-x86_64-v0.5/)
-else
-LIB_MRPIZ = $(realpath /home/elouan/Ubuntu24.04_share/Cours/S7/Remise_a_nv_C/Robot_sim/lib_mrpiz)
-endif
+LIB_MRPIZ = $(realpath ../../../lib_mrpiz-x86_64-v0.5/)
 # Avec la ligne précédente, on suppose que :
 # - la lib a été mise au même niveau que le répertoire racine (et donc PAS dans le répertoire racine, mais au-dessus),
 # - et que son répertoire a été renommée (pour enlever la notion de version)
@@ -42,8 +38,8 @@ CC = gcc
 
 
 #Gestion des bibliotheques (intox)
-# CCFLAGS  = -DINTOX -DINTOX_ADDRESS=127.0.0.1 -DINTOX_PORT=12341
-CCFLAGS  = -DINTOX -DINTOX_ADDRESS=192.168.1.43 -DINTOX_PORT=12301
+CCFLAGS  = -DINTOX -DINTOX_ADDRESS=127.0.0.1 -DINTOX_PORT=12341
+#CCFLAGS  = -DINTOX -DINTOX_ADDRESS=192.168.1.43 -DINTOX_PORT=12301
 
 CCFLAGS += -I"$(LIB_MRPIZ)/include/mrpiz/"
 
