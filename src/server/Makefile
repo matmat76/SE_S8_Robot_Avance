@@ -8,7 +8,11 @@
 
 # la librairie MRPiZ permettant de discuter avec le simulateur Intox du robot MrPizz (programme java)
 #LIB_MRPIZ = /absolute/path/to/lib_mrpiz/
-LIB_MRPIZ = $(realpath  ../../lib_mrpiz-x86_64-v0.5/)
+ifeq ($(shell uname -m), x86_64)
+LIB_MRPIZ = $(realpath ../../lib_mrpiz-x86_64-v0.5/)
+else
+LIB_MRPIZ = $(realpath /home/elouan/Ubuntu24.04_share/Cours/S7/Remise_a_nv_C/Robot_sim/lib_mrpiz)
+endif
 # Avec la ligne précédente, on suppose que :
 # - la lib a été mise au même niveau que le répertoire racine (et donc PAS dans le répertoire racine, mais au-dessus),
 # - et que son répertoire a été renommée (pour enlever la notion de version)
@@ -20,8 +24,8 @@ LIB_MRPIZ = $(realpath  ../../lib_mrpiz-x86_64-v0.5/)
 # Organisation du projet.
 #
 
-BINDIR = ../bin
-DOCDIR = ../doc
+BINDIR = ./bin
+DOCDIR = ./doc
 # Définitions des binaires (exécutables) à générer.
 EXE_NAME = go
 EXE = $(BINDIR)/$(EXE_NAME)
@@ -38,7 +42,9 @@ CC = gcc
 
 
 #Gestion des bibliotheques (intox)
-CCFLAGS  = -DINTOX -DINTOX_ADDRESS=127.0.0.1 -DINTOX_PORT=12341
+# CCFLAGS  = -DINTOX -DINTOX_ADDRESS=127.0.0.1 -DINTOX_PORT=12341
+CCFLAGS  = -DINTOX -DINTOX_ADDRESS=192.168.1.43 -DINTOX_PORT=12301
+
 CCFLAGS += -I"$(LIB_MRPIZ)/include/mrpiz/"
 
 
@@ -58,7 +64,7 @@ LDFLAGS += -lm
 CCFLAGS += -std=gnu11 -Wall -pedantic
 
 #Flags suplémentaires demandés par l'agence française ANSI (Cybersecurité) pour linux avec gcc
-CCFLAGS += -fanalyzer -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2 -Winit-self -Wstringop-overflow=4 -ftrapv -fstack-protector-strong -mstack-protector-guard=tls -fPIE -Wdate-time
+CCFLAGS += -fanalyzer -Wformat=2 -Wformat-overflow=2 -Wformat-truncation=2 -Winit-self -Wstringop-overflow=4 -ftrapv -fstack-protector-strong  -fPIE -Wdate-time
 LDFLAGS += -fsanitize=undefined -fPIE
 
 # Debug
@@ -92,7 +98,7 @@ DEP = $(SRC:.c=.d)
 all: $(EXE)
 
 $(EXE): $(OBJ)
-	$(CC) $(CCFLAGS) $(OBJ) $(LDFLAGS) -o$(EXE)
+	$(CC) $(CCFLAGS) $(OBJ) $(LDFLAGS) -o $(EXE)
 
 .c.o:
 	$(CC) -c $(CCFLAGS) $< -o $@

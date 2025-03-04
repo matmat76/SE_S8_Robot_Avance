@@ -11,7 +11,7 @@
  #include <sys/types.h>
  #include <netinet/in.h>
  #include <sys/socket.h>
- #include "common/data-type.h"
+ #include "../common/data-type.h"
  #include <signal.h>
 
 
@@ -50,6 +50,7 @@ typedef enum {
 static void app_loop(void);
 static void handle_client_data(int client_socket); 
 static void setup_serveur(void);
+
 /**
  * @brief Global variable used for program clean exit
  */
@@ -89,6 +90,7 @@ int main(void)
 
 static void app_loop()
 {
+  setup_serveur();
 }
 
 
@@ -160,6 +162,7 @@ static void setup_serveur(void){
     exit(1);
   }
 
+  fprintf(stderr, "server: waiting for connections...\n");
   while(running){
     sin_size = sizeof(struct sockaddr_in);
     if((new_fd = accept(sockfd, (struct sockaddr*)&their_addr, &sin_size)) == -1){

@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include "pilot.h"
+#include "../../common/data-type.h"
 
 /*Allow to describe the status of the full movement, if all of move_t[] is done or not*/
 typedef enum{

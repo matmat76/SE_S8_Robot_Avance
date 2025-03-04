@@ -19,7 +19,7 @@ CCFLAGS = -Wall -MMD -MP
 LDFLAGS = -lm
 
 # Error handeling 
-CCFLAGS += -Werror=uninitialized
+#CCFLAGS += -Werror=uninitialized
 
 # Source files
 SRC = $(wildcard $(shell find $(SRC_DIR) -type f -regex ".*\.c"))

@@ -3,7 +3,7 @@
 
 #include "robot.h"
 #include <time.h>
-#include "../common/data-type.h"
+#include "../../common/data-type.h"
 
 
 move_status_t pilot_get_status();

@@ -1,5 +1,6 @@
-#include "../robot_app/pilot.h"
-#include "../robot_app/copilot.h"
+#include "../server/robot_app/pilot.h"
+#include "../server/robot_app/robot.h"
+#include "../server/robot_app/copilot.h"
 #ifndef DATA_TYPE_H
 #define DATA_TYPE_H
 
@@ -50,19 +51,19 @@ typedef struct{
 
 // Socket data types
 
-typedef enum {
-    COPILOT_SET_PATH,
-    COPILOT_GET_PATH,
-    COPILOT_DESTROY_PATH,
-    COPILOT_START_PATH,
-    COPILOT_STOP_AT_STEP_COMPLETION,
-    COPILOT_IS_PATH_COMPLETE
-} order_type_t;
+// typedef enum {
+//     COPILOT_SET_PATH,
+//     COPILOT_GET_PATH,
+//     COPILOT_DESTROY_PATH,
+//     COPILOT_START_PATH,
+//     COPILOT_STOP_AT_STEP_COMPLETION,
+//     COPILOT_IS_PATH_COMPLETE
+// } order_type_t;
 
-typedef struct {
-    move_t* path;
-    int path_size;
-} order_details_t;
+// typedef struct {
+//     move_t* path;
+//     int path_size;
+// } order_details_t;
 
 typedef struct{
     move_t* moves; 

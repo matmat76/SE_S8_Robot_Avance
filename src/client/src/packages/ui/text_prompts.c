@@ -17,10 +17,7 @@ static const char *menu_strings[] = {
     "Create a path",            // CMD_CREATE_PATH
     "Add a step to the Path",   // CMD_ADD_STEP
     "Destroy the path",         // CMD_DESTROY_PATH
-    "Show the path",            // CMD_SHOW_PATH
     "Start to follow the path", // CMD_START_PATH
-    "You can save your path",               // CMD_SAVE_PATH
-    "You can load your path",              // CMD_LOAD_PATH
     "Quit"                      // CMD_START_QUIT
 };
 

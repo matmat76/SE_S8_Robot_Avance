@@ -1,7 +1,7 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
-#include "../common/data-type.h"
+#include "../../common/data-type.h"
 
 /**
  * @file robot.h

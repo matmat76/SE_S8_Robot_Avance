@@ -5,11 +5,13 @@
 #include <unistd.h>
 #include "text_prompts.h"
 #include "../../../../common/data-type.h"
+#include "../socket/sock.h"
 
 #define DELAY 100000
 #define PATH_FILENAME "path.txt"
 
 static int steps_number = 0;
+static move_t *step = NULL;
 
 /*Function to create the amount of steps*/
 int handle_user_prompt_int(id_message_prompt id, int min, int max)
@@ -46,9 +48,7 @@ void handle_create_path()
         steps_number = 0;
         print_failure_message(CMD_CREATE_PATH);
     }
-    move_t *step;
     step = calloc(steps_number, sizeof(move_t));
-    copilot_set_Path(step, steps_number);
     /*HINT: update steps_number on success or set to 0 on failure */
 }
 
@@ -61,7 +61,6 @@ void handle_add_step()
         printf("Error : Impossible to access to the path\n");
         return;
     }
-    move_t *step = copilot_get_path();
 
     for (int i = 0; i < steps_number; i++)
     {
@@ -170,35 +169,17 @@ void handle_add_step()
 void handle_destroy_path()
 {
     /*TODO: call copilot_destroy_path(); */
-    int etat = copilot_destroy_path();
-    if (etat != 0)
-    {
-        print_failure_message(CMD_DESTROY_PATH);
-    }
-    else
-    {
-        print_success_message(CMD_DESTROY_PATH);
-    }
-    /*HINT: steps_number is set to 0 on success to prevent adding steps to a
-     * non-existing path */
+    step = NULL;
     steps_number = 0;
 }
 
 int handle_start_path()
 {
     /*TODO: exit ui to start path */
-    move_t *current_path = copilot_get_path();
+    move_t *current_path = step;
     if (steps_number > 0 && current_path != NULL)
     {
-        /*Starting the robot*/
-        copilot_start_path();
-        print_success_message(CMD_START_PATH);
-
-        while (!copilot_is_path_complete())
-        {
-            copilot_stop_at_step_completion();
-            usleep(DELAY);
-        }
+        sock_send_detailed_order(current_path, steps_number);
         return EXIT_SUCCESS;
     }
     print_failure_message(CMD_START_PATH);
