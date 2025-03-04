@@ -6,10 +6,7 @@ typedef enum {
     CMD_CREATE_PATH,
     CMD_ADD_STEP,
     CMD_DESTROY_PATH,
-    CMD_SHOW_PATH,
     CMD_START_PATH,
-    CMD_SAVE_PATH,
-    CMD_LOAD_PATH,
     CMD_QUIT,
     NB_COMMAND
   } menu_command;
