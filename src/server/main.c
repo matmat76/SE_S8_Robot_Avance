@@ -126,6 +126,9 @@ static void handle_client_data(int client_socket){
 
   copilot_set_Path(receive_data.moves, receive_data.num_moves);
   copilot_start_path();
+  while(!copilot_is_path_complete()){
+    copilot_stop_at_step_completion();
+  }
   free(receive_data.moves);
 
 }
