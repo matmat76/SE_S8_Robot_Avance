@@ -173,4 +173,7 @@ static void setup_serveur(void){
     handle_client_data(new_fd);
     close(new_fd);
   }
+  
+  // Close the server socket when done
+  close(sockfd);
 }

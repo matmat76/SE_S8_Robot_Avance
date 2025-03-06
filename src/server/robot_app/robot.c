@@ -4,6 +4,7 @@
 #include "mrpiz.h"
 #include <errno.h>
 #include <stdio.h>
+#include <string.h>
 
 int robot_start(void) {
   fprintf(stdout,"Initializing robot ...\n"); 
