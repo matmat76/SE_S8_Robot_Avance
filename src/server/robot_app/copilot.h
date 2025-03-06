@@ -12,6 +12,7 @@ typedef enum{
     PATH_ERROR
 }path_status_t;
 
+void copilot_init(void);
 
 bool copilot_is_path_complete();
 void copilot_start_path();
@@ -25,9 +26,6 @@ int copilot_destroy_path();
 void copilot_add_step(move_t a_move);
 int getX();
 int getY();
-bool is_obstacle(int x, int y);
-void update_angle(move_t move);
-void update_position(move_t move, int encoder_position);
 
 
 #endif // COPILOT_H

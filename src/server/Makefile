@@ -42,6 +42,7 @@ CCFLAGS  = -DINTOX -DINTOX_ADDRESS=127.0.0.1 -DINTOX_PORT=12345
 #CCFLAGS  = -DINTOX -DINTOX_ADDRESS=192.168.1.43 -DINTOX_PORT=12301
 
 CCFLAGS += -I"$(LIB_MRPIZ)/include/mrpiz/"
+CCFLAGS += -g
 
 
 # pour genérer les dépendances (fichiers .h inclus dans les .c)

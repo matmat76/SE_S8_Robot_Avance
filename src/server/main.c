@@ -90,6 +90,7 @@ int main(void)
 
 static void app_loop()
 {
+  copilot_init();
   setup_serveur();
 }
 
